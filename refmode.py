@@ -1,4 +1,4 @@
-x = int(input('Digite um número: '))
+x = int(input('Digite um numero: '))
 
 binary = bin(x + 1)
 size = len(binary) - 3
@@ -8,7 +8,10 @@ for i in range(size):
 	x += '0'
 
 x += binary[2:]
-print(x)
 
+lista = [];
 
+for c in x:
+	lista.append(c) 
 
+print(lista)
