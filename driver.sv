@@ -34,4 +34,24 @@ class driver extends uvm_driver #(transaction_in);
 			end
 	endtask : reset_signals
 
-	
+
+	virtual task get_and_drive(uvm_phase phase);
+		wait(vif.rstn === 0);
+		@(posedge vif.rstn);
+		forever begin
+			seq_item_port.get_next_item(tr);
+			begin_tr(tr, "req_driver");
+			@(posedge clk);
+			vif.dt_i = tr.dt_i;
+			vif.valid_i = '1;
+			repeat(2) @posedge(vif.clk);
+			vif.valid_i = '0;
+			@(negedge vif.busy_o);
+			seq_item_port.item_done();
+			end_tr(tr);
+		end
+	endtask : get_and_drive
+
+endclass : driver
+
+
