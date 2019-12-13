@@ -2,7 +2,7 @@ IFS = ./interface_if.sv
 
 PKGS = ./pkg.sv
 
-RTL = ../rtl/
+RTL = ../rtl/exp_golomb_coder.sv
 
 RUN_ARGS_COMMON = -access +r -input ./shm.tcl \
 								+uvm_set_config_int=*,recording_detail,1 -coverage all -covoverwrite

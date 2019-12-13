@@ -1,4 +1,4 @@
-class env extend uvm_env;
+class env extends uvm_env;
 	`uvm_component_utils(env)
 
 	agent mst;
@@ -18,9 +18,9 @@ class env extend uvm_env;
 
 	virtual function  void connect_phase(uvm_phase phase);
 		super.connect_phase(phase);
-		mst.agt_resp_port(cov.resp_port);
-		mst.agt_resp_port(sb.ap_comp);
-		mst.agt_req_port(sb.ap_rfm);
+		mst.agt_resp_port.connect(cov.resp_port);
+		mst.agt_resp_port.connect(sb.ap_comp);
+		mst.agt_req_port.connect(sb.ap_rfm);
 	endfunction : connect_phase
 
 endclass : env

@@ -16,7 +16,7 @@ class agent extends uvm_agent;
 		agt_resp_port = new("agt_resp_port", this);
 	endfunction : new
 
-	virtual function build_phase(uvm_phase phase);
+	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
 		mon = monitor::type_id::create("mon", this);
 		sqr = sequencer::type_id::create("sqr", this);

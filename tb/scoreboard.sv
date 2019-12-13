@@ -14,11 +14,11 @@ class scoreboard extends uvm_scoreboard;
 		ap_rfm  = new("ap_rfm", this);
 	endfunction : new
 
-	virtual function void buid_phase(uvm_phase phase);
+	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
 		rfm  = refmod::type_id::create("rfm", this);
 		comp = comp_type::type_id::create("comp", this);
-	endfunction : buid_phase
+	endfunction : build_phase
 
 	virtual function void connect_phase(uvm_phase phase);
 		super.connect_phase(phase);

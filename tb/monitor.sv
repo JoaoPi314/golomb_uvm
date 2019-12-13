@@ -1,15 +1,16 @@
 class monitor extends uvm_monitor;
 	`uvm_component_utils(monitor)
 
-	interface vif vif;
+	interface_vif vif;
 	event begin_rec_in, begin_rec_out, end_rec_in, end_rec_out;
 	transaction_in tr_in;
 	transaction_out tr_out;
 
-	int index = 0;
+	int index;
+	int counter;
 
-	uvm_analysys_port #(transaction_in)  req_port;
-	uvm_analysys_port #(transaction_out) resp_port;
+	uvm_analysis_port #(transaction_in)  req_port;
+	uvm_analysis_port #(transaction_out) resp_port;
 
 	function new(string name, uvm_component parent);
 		super.new(name, parent);
@@ -17,9 +18,9 @@ class monitor extends uvm_monitor;
 		resp_port = new("resp_port", this);
 	endfunction : new
 
-	virtual function void build_phase(uvm_pase phase);
+	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		if(!uvm_config_db#(interface_vif)::get(this, "", vif, vif)) begin 
+		if(!uvm_config_db#(interface_vif)::get(this, "", "vif", vif)) begin 
 			`uvm_fatal("NOVIF", "failed to get virtual interface")
 		end
 		tr_in = transaction_in::type_id::create("tr_in", this);
@@ -29,10 +30,8 @@ class monitor extends uvm_monitor;
 	virtual task run_phase(uvm_phase phase);
 		super.run_phase(phase);	
 		fork
-			record_in();
-			record_out();
-			collect_tr_in(phase);
-			collect_tr_out(phase);
+
+			collect_tr(phase);
 		join		
 	endtask : run_phase
 
@@ -43,36 +42,49 @@ class monitor extends uvm_monitor;
 		end_tr(tr_in);
 	endtask : record_in
 
-	virtual task record_out();
-		@(begin_rec_out);
-		begin_tr(tr_out, "resp");
-		@(end_rec_out);
-		end_tr(tr_out);
-	endtask : record_out
 
-	virtual task collect_tr_in(phase);
-		@(posedge vif.clk iff vif.valid_i);
-		->begin_rec_in;
-		tr_in.dt_i = vif.dt_i;
-		req_port.write(tr_in);
-		@(negedge clk);
-		->end_rec_in;
+	virtual task collect_tr(uvm_phase phase);
+		forever begin 
+			fork
+				record_in();
+				collect_tr_in(phase);
+				collect_tr_out(phase);
+			join
+
+		end 
+	endtask : collect_tr
+
+
+
+	virtual task collect_tr_in(uvm_phase phase);
+			@(posedge vif.clk iff vif.valid_i) begin
+			->begin_rec_in;
+			tr_in.dt_i = vif.dt_i;
+			req_port.write(tr_in);
+			$display("Eu escrevi?");
+			@(negedge vif.clk);
+			->end_rec_in;
+			end 
+		
 	endtask : collect_tr_in
 
-	virtual task collect_tr_out(phase);
-		@(posedge vif.clk iff vif.valid_o);
-		while(vif.valid_o) begin
-			->begin_rec_out;
-			tr_out.dt_o = vif.dt_o;
-			tr_out.index = index;
-			index++;
-			resp_port.write(tr_out, "resp");
-			@(negedge vif.clk);
-			->end_rec_out;
-			@(posedge vif.clk);
-		end
-		if(index === 7)
-			index = 0;
+	virtual task collect_tr_out(uvm_phase phase);
+			@(posedge vif.clk iff vif.valid_o);
+			while(vif.valid_o) begin
+				begin_tr(tr_out, "resp");
+				tr_out.dt_o = vif.dt_o;
+				tr_out.index = index;
+				index += 1;
+				resp_port.write(tr_out);
+				$display("Escrevi a resp? ");
+				@(negedge vif.clk);
+				end_tr(tr_out);
+				@(posedge vif.clk);
+			end
+			if(~vif.valid_o)
+				index = 0;
+		 
 	endtask : collect_tr_out
 	
+
 endclass : monitor

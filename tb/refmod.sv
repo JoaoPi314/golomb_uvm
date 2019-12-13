@@ -1,4 +1,4 @@
-import "DPI-C" context function void codifica(dt_i, &dt_o);
+//import "DPI-C" context function string codifica(dt_i);
 
 class refmod extends uvm_component;
 	`uvm_component_utils(refmod)
@@ -6,17 +6,22 @@ class refmod extends uvm_component;
 	transaction_in tr_in;
 	transaction_out tr_out;
 
-	int dt_o[0:17];
 	uvm_analysis_imp #(transaction_in, refmod) ref_req;
-	uvm_analysis_port #(transaction_out, refmod) ref_resp;
+	uvm_analysis_port #(transaction_out) ref_resp;
 
 	event begin_reftask, begin_rec, end_rec;
+	bit [0:17] dt_o;
+	bit [7:0] sum;
+	int count;
+	int c;
+	int size;
 
-
-	function new(string gname = "refmod", uvm_component parent);
+	function new(string name = "refmod", uvm_component parent);
 		super.new(name, parent);
 		ref_req  = new("ref_req", this);
 		ref_resp = new("ref_resp", this);
+		count = 8;
+		c = 7;
 	endfunction : new
 
 	virtual function void build_phase(uvm_phase phase);
@@ -39,26 +44,60 @@ class refmod extends uvm_component;
 	endfunction : write
 
 	virtual task record_tr();​
-		forever begin​
-			@(begin_record);​
-	      	begin_tr(ULA_tr_out, "refmod");​
-	      	@(end_record);​
-	      	end_tr(ULA_tr_out);​
-	    end​
-	endtask​	
+		forever begin
+			@(begin_rec);
+	      	begin_tr(tr_out, "refmod");​
+	      	@(end_rec);
+	      	end_tr(tr_out);​
+	    end
+	endtask
 
 	task refmod_task();
 		forever begin​
 			@begin_reftask;
 			tr_out = transaction_out::type_id::create("tr_out", this);
 			->begin_rec;
-			codifica(tr_in.dt_i, &dt_o);
+			$display("to chegando aqui?");
+			codifica();
+			$display("Codifiquei? %b", dt_o);
 			tr_out.dt_o = dt_o[tr_out.index];
 			#10;
 			->end_rec;
 			ref_resp.write(tr_out);
 		end
+
 	endtask : refmod_task
+
+
+	virtual function void codifica();
+		sum = tr_in.dt_i + 1;
+		while(sum[c] == 0 && c != 0)begin 
+			count -= 1;
+			c -=1;
+			$display("Contei? %d, dt_i = %b", count, tr_in.dt_i);
+		end
+		if(count === 0)
+			count = 8;
+		size = (count -1)*2 + 1;
+		$display("size = %d", size);
+		c = size -1;
+		while(c > (size/2))begin
+			dt_o[c] = 1'b0;
+			c -= 1;
+			$display("c = %d", c);
+		end
+		dt_o[size/2] = 1'b1;
+		while(c >= 0)begin
+			dt_o[c] = sum[c];
+			c -= 1;
+		end
+
+		c = 7;
+		count = 8;
+	endfunction
+
+
+
 
 endclass : refmod
 ​

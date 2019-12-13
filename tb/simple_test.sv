@@ -15,7 +15,7 @@ class simple_test extends uvm_test;
 	endfunction : build_phase
 
 	task run_phase(uvm_phase phase);
-		seq.start(env.h.mst.sqr);
+		seq.start(env_h.mst.sqr);
 	endtask : run_phase
 
 endclass : simple_test

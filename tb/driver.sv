@@ -1,4 +1,4 @@
-typedef virtual interface_if.mst interfgace_vif;
+typedef virtual interface_if.mst interface_vif;
 
 class driver extends uvm_driver #(transaction_in);
 	`uvm_component_utils(driver) //Sempre tem que ter isso em classes que derivam de uvm_object
@@ -21,16 +21,16 @@ class driver extends uvm_driver #(transaction_in);
 	task run_phase(uvm_phase phase);
 		fork
 			reset_signals();
-			get_and_drive();
+			get_and_drive(phase);
 		join
 	endtask : run_phase
 
 	virtual task reset_signals();
-		wait(vif.rstn === 0)
+		wait(vif.rstn === 0);
 			forever begin
 				vif.dt_i    <= '0;
 				vif.valid_i <= '0;
-				@(posedge vif.rstn)
+				@(posedge vif.rstn);
 			end
 	endtask : reset_signals
 
@@ -40,11 +40,12 @@ class driver extends uvm_driver #(transaction_in);
 		@(posedge vif.rstn);
 		forever begin
 			seq_item_port.get_next_item(tr);
+			$display("To pegando o proximo item?");
 			begin_tr(tr, "req_driver");
-			@(posedge clk);
+			@(posedge vif.clk);
 			vif.dt_i = tr.dt_i;
 			vif.valid_i = '1;
-			repeat(2) @posedge(vif.clk);
+			repeat(2) @(posedge vif.clk);
 			vif.valid_i = '0;
 			@(negedge vif.busy_o);
 			seq_item_port.item_done();
