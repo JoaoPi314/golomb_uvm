@@ -51,8 +51,7 @@ class monitor extends uvm_monitor;
 	endtask : record_out
 
 	virtual task collect_tr_in(phase);
-		@(posedge vif.clk);
-		@(posedge vif.valid_i);
+		@(posedge vif.clk iff vif.valid_i);
 		->begin_rec_in;
 		tr_in.dt_i = vif.dt_i;
 		req_port.write(tr_in);
@@ -61,8 +60,7 @@ class monitor extends uvm_monitor;
 	endtask : collect_tr_in
 
 	virtual task collect_tr_out(phase);
-		@(posedge vif.clk);
-		@(posedge vif.valid_o);
+		@(posedge vif.clk iff vif.valid_o);
 		while(vif.valid_o) begin
 			->begin_rec_out;
 			tr_out.dt_o = vif.dt_o;
@@ -73,6 +71,8 @@ class monitor extends uvm_monitor;
 			->end_rec_out;
 			@(posedge vif.clk);
 		end
+		if(index === 7)
+			index = 0;
 	endtask : collect_tr_out
 	
 endclass : monitor
