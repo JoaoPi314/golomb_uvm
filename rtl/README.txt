@@ -1,0 +1,1 @@
+Aqui vai estar o rtl
