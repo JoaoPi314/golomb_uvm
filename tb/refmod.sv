@@ -14,6 +14,7 @@ class refmod extends uvm_component;
 	bit [7:0] sum;
 	int count;
 	int c;
+	int i;
 	int size;
 
 	function new(string name = "refmod", uvm_component parent);
@@ -56,14 +57,17 @@ class refmod extends uvm_component;
 		forever begin​
 			@begin_reftask;
 			tr_out = transaction_out::type_id::create("tr_out", this);
-			->begin_rec;
-			$display("to chegando aqui?");
 			codifica();
-			$display("Codifiquei? %b", dt_o);
-			tr_out.dt_o = dt_o[tr_out.index];
-			#10;
-			->end_rec;
-			ref_resp.write(tr_out);
+			i = size;
+			while(i > 0)begin
+				->begin_rec;
+				tr_out.dt_o = dt_o[17 - size - 1 - i];
+				$display("Pos = %d", 17 - size - 1 - i);
+				#10;
+				->end_rec;
+				ref_resp.write(tr_out);
+				i -= 1;
+			end
 		end
 
 	endtask : refmod_task

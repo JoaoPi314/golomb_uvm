@@ -7,7 +7,6 @@ class monitor extends uvm_monitor;
 	transaction_out tr_out;
 
 	int index;
-	int counter;
 
 	uvm_analysis_port #(transaction_in)  req_port;
 	uvm_analysis_port #(transaction_out) resp_port;
@@ -73,10 +72,11 @@ class monitor extends uvm_monitor;
 			while(vif.valid_o) begin
 				begin_tr(tr_out, "resp");
 				tr_out.dt_o = vif.dt_o;
+				$display("index = %d", index );
 				tr_out.index = index;
+				$display("index_tr = %d", tr_out.index);
 				index += 1;
 				resp_port.write(tr_out);
-				$display("Escrevi a resp? ");
 				@(negedge vif.clk);
 				end_tr(tr_out);
 				@(posedge vif.clk);
