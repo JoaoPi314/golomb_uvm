@@ -58,12 +58,13 @@ class refmod extends uvm_component;
 
 	virtual function void codifica();
 		sum = tr_in.dt_i + 1;
-		while(sum[c] == 0 && c != 0)begin 
+		while(sum[c] == 0 && c >= 0)begin 
 			count -= 1;
 			c -=1;
 		end
 		if(count === 0)
-			count = 8;
+			count = 9;
+		$display("cont = %d", count);
 		size = (count -1)*2 + 1;
 		c = size -1;
 		while(c > (size/2))begin
@@ -71,6 +72,7 @@ class refmod extends uvm_component;
 			c -= 1;
 		end
 		dt_o[size/2] = 1'b1;
+		c-=1;
 		while(c >= 0)begin
 			dt_o[c] = sum[c];
 			c -= 1;
