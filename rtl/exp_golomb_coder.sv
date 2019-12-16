@@ -59,7 +59,7 @@ logic        [DATA_WIDTH:0]   reg_dt_w;
 logic                         enb_dt_w;
 logic                         found_flag;
 logic        [ADDR_WIDTH-1:0] fnd_pos_w;
-logic        [ADDR_WIDTH-1:0] addr_wr_w;
+logic        [ADDR_WIDTH:0]   addr_wr_w;
 logic                         coding_flag;
 logic                         last_flag;
 logic        [1:0]            state, next_state;

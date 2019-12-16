@@ -46,7 +46,7 @@ class refmod extends uvm_component;
 			@begin_reftask;
 			tr_out = transaction_out::type_id::create("tr_out", this);
 			codifica();
-			$display("Codificado: %b", dt_o);
+			//$display("Codificado: %b", dt_o);
 			begin_tr(tr_out, "ref_resp");
 			tr_out.dt_o = dt_o;
 			ref_resp.write(tr_out);
@@ -64,7 +64,7 @@ class refmod extends uvm_component;
 		end
 		if(count === 0)
 			count = 9;
-		$display("cont = %d", count);
+		//$display("cont = %d", count);
 		size = (count -1)*2 + 1;
 		c = size -1;
 		while(c > (size/2))begin

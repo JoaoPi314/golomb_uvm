@@ -12,7 +12,7 @@ class sequence_in extends uvm_sequence #(transaction_in);
 		forever begin
 			tr = transaction_in::type_id::create("tr");
 			start_item(tr);
-			assert(tr.randomize()/*with{tr.dt_i == 255;}*/);
+			assert(tr.randomize());
 			finish_item(tr);
 		end
 	endtask : body

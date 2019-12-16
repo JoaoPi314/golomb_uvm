@@ -18,6 +18,7 @@ class monitor extends uvm_monitor;
 		super.new(name, parent);
 		req_port = new ("req_port", this);
 		resp_port = new("resp_port", this);
+		index = 0;
 	endfunction : new
 
 	virtual function void build_phase(uvm_phase phase);
@@ -76,12 +77,14 @@ class monitor extends uvm_monitor;
 				dt_o[cont - index - 1] = vif.dt_o;
 				index += 1;
 				@(posedge vif.clk);
+				//$display("vif.dt_o = %b", vif.dt_o);
+				//$display("dt_o[%d] = %b", cont - index - 1, vif.dt_o);
 			end
-			$display("dt_o = %b", dt_o);
+			//$display("dt_o = %b", dt_o);
 			tr_out.dt_o = dt_o;
 			begin_tr(tr_out, "resp");
 			resp_port.write(tr_out);
-			$display("Escrevi");
+			//$display("Escrevi");
 			if(~vif.valid_o)
 				index = 0;
 			@(negedge vif.clk);
@@ -92,12 +95,13 @@ class monitor extends uvm_monitor;
 	virtual function void conta();
 		auxiliar = vif.dt_i + 1;
 		cont = 0;
-		while (auxiliar[7] === 0 && cont <= 8)begin
+		while (auxiliar[7] === 0 && cont < 8)begin
 			auxiliar = auxiliar << 1;
 			cont +=1 ;
 		end
-
+		//$display("cont do monitor = %d", cont);
 		cont = 8 - cont;
+		cont = (cont == 0) ? 9 : cont; 
 		cont = (cont - 1)*2 + 1;
 	endfunction : conta
 	
