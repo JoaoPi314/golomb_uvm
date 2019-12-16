@@ -10,7 +10,7 @@ class refmod extends uvm_component;
 	uvm_analysis_port #(transaction_out) ref_resp;
 
 	event begin_reftask, begin_rec, end_rec;
-	bit [0:17] dt_o;
+	bit [16:0] dt_o;
 	bit [7:0] sum;
 	int count;
 	int c;
@@ -31,10 +31,7 @@ class refmod extends uvm_component;
 
 	virtual task run_phase(uvm_phase phase);
 		super.run_phase(phase);
-		fork
-			refmod_task();
-			record_tr();
-		join
+		refmod_task();
 	endtask : run_phase
 
 
@@ -44,32 +41,18 @@ class refmod extends uvm_component;
 		->begin_reftask;
 	endfunction : write
 
-	virtual task record_tr();​
-		forever begin
-			@(begin_rec);
-	      	begin_tr(tr_out, "refmod");​
-	      	@(end_rec);
-	      	end_tr(tr_out);​
-	    end
-	endtask
-
 	task refmod_task();
 		forever begin​
 			@begin_reftask;
 			tr_out = transaction_out::type_id::create("tr_out", this);
 			codifica();
-			i = size;
-			while(i > 0)begin
-				->begin_rec;
-				tr_out.dt_o = dt_o[17 - size - 1 - i];
-				$display("Pos = %d", 17 - size - 1 - i);
-				#10;
-				->end_rec;
-				ref_resp.write(tr_out);
-				i -= 1;
-			end
+			$display("Codificado: %b", dt_o);
+			begin_tr(tr_out, "ref_resp");
+			tr_out.dt_o = dt_o;
+			ref_resp.write(tr_out);
+			#10;
+			end_tr(tr_out);
 		end
-
 	endtask : refmod_task
 
 
@@ -78,17 +61,14 @@ class refmod extends uvm_component;
 		while(sum[c] == 0 && c != 0)begin 
 			count -= 1;
 			c -=1;
-			$display("Contei? %d, dt_i = %b", count, tr_in.dt_i);
 		end
 		if(count === 0)
 			count = 8;
 		size = (count -1)*2 + 1;
-		$display("size = %d", size);
 		c = size -1;
 		while(c > (size/2))begin
 			dt_o[c] = 1'b0;
 			c -= 1;
-			$display("c = %d", c);
 		end
 		dt_o[size/2] = 1'b1;
 		while(c >= 0)begin

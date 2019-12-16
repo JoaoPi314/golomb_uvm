@@ -7,6 +7,9 @@ class monitor extends uvm_monitor;
 	transaction_out tr_out;
 
 	int index;
+	int cont;
+	bit [7:0] auxiliar;
+	bit [16:0] dt_o;
 
 	uvm_analysis_port #(transaction_in)  req_port;
 	uvm_analysis_port #(transaction_out) resp_port;
@@ -60,7 +63,6 @@ class monitor extends uvm_monitor;
 			->begin_rec_in;
 			tr_in.dt_i = vif.dt_i;
 			req_port.write(tr_in);
-			$display("Eu escrevi?");
 			@(negedge vif.clk);
 			->end_rec_in;
 			end 
@@ -69,22 +71,35 @@ class monitor extends uvm_monitor;
 
 	virtual task collect_tr_out(uvm_phase phase);
 			@(posedge vif.clk iff vif.valid_o);
+			conta();
 			while(vif.valid_o) begin
-				begin_tr(tr_out, "resp");
-				tr_out.dt_o = vif.dt_o;
-				$display("index = %d", index );
-				tr_out.index = index;
-				$display("index_tr = %d", tr_out.index);
+				dt_o[cont - index - 1] = vif.dt_o;
 				index += 1;
-				resp_port.write(tr_out);
-				@(negedge vif.clk);
-				end_tr(tr_out);
 				@(posedge vif.clk);
 			end
+			$display("dt_o = %b", dt_o);
+			tr_out.dt_o = dt_o;
+			begin_tr(tr_out, "resp");
+			resp_port.write(tr_out);
+			$display("Escrevi");
 			if(~vif.valid_o)
 				index = 0;
+			@(negedge vif.clk);
+			end_tr(tr_out);
 		 
 	endtask : collect_tr_out
+
+	virtual function void conta();
+		auxiliar = vif.dt_i + 1;
+		cont = 0;
+		while (auxiliar[7] === 0 && cont <= 8)begin
+			auxiliar = auxiliar << 1;
+			cont +=1 ;
+		end
+
+		cont = 8 - cont;
+		cont = (cont - 1)*2 + 1;
+	endfunction : conta
 	
 
 endclass : monitor

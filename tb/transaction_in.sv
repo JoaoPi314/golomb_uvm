@@ -13,7 +13,7 @@ class transaction_in extends uvm_sequence_item;
 
 
 	function string convert2string();
-		return $sformatf("dt_i = %h", dt_i);
+		return $sformatf("dt_i = %b", dt_i);
 	endfunction
 
 endclass : transaction_in

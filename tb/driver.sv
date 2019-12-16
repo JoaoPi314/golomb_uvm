@@ -40,7 +40,7 @@ class driver extends uvm_driver #(transaction_in);
 		@(posedge vif.rstn);
 		forever begin
 			seq_item_port.get_next_item(tr);
-			$display("To pegando o proximo item?");
+			$display("dt_i = %b", tr.dt_i);
 			begin_tr(tr, "req_driver");
 			@(posedge vif.clk);
 			vif.dt_i = tr.dt_i;
