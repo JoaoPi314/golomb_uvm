@@ -1,5 +1,5 @@
-xrun(64): 18.09-s011: (c) Copyright 1995-2019 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	18.09-s011: Started on Dec 17, 2019 at 09:44:45 -03
+xrun(64): 19.09-s003: (c) Copyright 1995-2019 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	19.09-s003: Started on Dec 17, 2019 at 11:27:56 -03
 xrun
 	-64bit
 	-uvm
@@ -18,7 +18,7 @@ xrun
    User defined plus("+") options:
 	+uvm_set_config_int=*,recording_detail,1
 
-Compiling UVM packages (uvm_pkg.sv cdns_uvm_pkg.sv) using uvmhome location /usr/local/cds/XCELIUM1809/tools/methodology/UVM/CDNS-1.1d
+Compiling UVM packages (uvm_pkg.sv cdns_uvm_pkg.sv) using uvmhome location /usr/local/cds/XCELIUM1909/tools/methodology/UVM/CDNS-1.1d
 file: ./pkg.sv
 		while(auxiliar[16] === 0 && count < 17)begin​
 		                                            |
@@ -67,7 +67,7 @@ xmvlog: *W,FUNTSK (./dec_driver.sv,59|10): function called as a task without voi
 xmvlog: *W,FUNTSK (./dec_monitor.sv,39|9): function called as a task without void'().
 		begin_tr(tr_out, "resp");
 		       |
-xmvlog: *W,FUNTSK (./dec_monitor.sv,76|9): function called as a task without void'().
+xmvlog: *W,FUNTSK (./dec_monitor.sv,79|9): function called as a task without void'().
 			begin_tr(tr_out, "ref_resp");
 			       |
 xmvlog: *W,FUNTSK (./dec_refmod.sv,44|10): function called as a task without void'().
@@ -98,7 +98,7 @@ xmelab: (../rtl/exp_golomb_decoder.sv,22): dft_tm_i
 		top
     m_imp.write (t);
               |
-xmelab: *W,FUNTSK (/usr/local/cds/XCELIUM1809/tools/methodology/UVM/CDNS-1.1d/sv/src/tlm1/uvm_analysis_port.svh,153|14): function called as a task without void'().
+xmelab: *W,FUNTSK (/usr/local/cds/XCELIUM1909/tools/methodology/UVM/CDNS-1.1d/sv/src/tlm1/uvm_analysis_port.svh,153|14): function called as a task without void'().
 xmelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
 
 	Extracting FSMs for coverage:
@@ -112,114 +112,114 @@ xmelab: *W,COVFHT: FSM hold transitions (transitions to the current state) are n
 	Enabling instrumentation for coverage types: block expression FSM toggle functional
 xmelab: *W,COVDCL: By default expression coverage is scored only for Verilog logical operators (|| and &&) and VHDL logical operators (OR, AND, NOR, and NAND), and is scored only in condition expressions. To score coverage for other operators and for expressions in other statements, use the "set_expr_coverable_operators" and "set_expr_coverable_statements" coverage configuration file commands with suitable options at elaboration.
 	Generating native compiled code:
-		worklib.exp_golomb_decoder:sv <0x09c2dc90>
+		worklib.exp_golomb_decoder:sv <0x6e012113>
 			streams:  16, words: 14639
-		worklib.uvm_pkg:sv <0x7700e927>
-			streams:   8, words:  8278
-		worklib.uvm_pkg:sv <0x2f8386bc>
-			streams:   8, words:  7903
-		worklib.uvm_pkg:sv <0x084b0e1c>
-			streams:   7, words:  7262
-		worklib.uvm_pkg:sv <0x64a9c2b6>
-			streams:   7, words:  1844
-		worklib.uvm_pkg:sv <0x0d1c8be5>
-			streams:   9, words:  3380
-		worklib.uvm_pkg:sv <0x19de50b0>
-			streams:  22, words: 60149
-		worklib.uvm_pkg:sv <0x4d3185c9>
-			streams:   7, words:  1844
-		worklib.uvm_pkg:sv <0x5af1beb5>
-			streams:  28, words: 31431
-		worklib.uvm_pkg:sv <0x5be4cee7>
-			streams:  27, words: 29748
-		worklib.uvm_pkg:sv <0x4f88786e>
-			streams:  23, words: 28205
-		worklib.uvm_pkg:sv <0x22d78645>
-			streams:  17, words: 15680
-		worklib.uvm_pkg:sv <0x4474521c>
-			streams:  26, words: 39490
-		worklib.uvm_pkg:sv <0x7f3f3825>
-			streams:   7, words:  2348
-		worklib.uvm_pkg:sv <0x5348b69f>
-			streams:  16, words: 20551
-		worklib.uvm_pkg:sv <0x3b9a8a16>
-			streams:  26, words: 35468
-		worklib.uvm_pkg:sv <0x68f03c72>
-			streams:  25, words: 62470
-		worklib.uvm_pkg:sv <0x1b81c15c>
-			streams:  27, words: 39022
-		worklib.uvm_pkg:sv <0x411647fa>
-			streams:  26, words: 54834
-		worklib.uvm_pkg:sv <0x21245dce>
-			streams:  27, words: 42096
-		worklib.uvm_pkg:sv <0x6a29f3f6>
-			streams:  25, words: 60800
-		worklib.uvm_pkg:sv <0x7977748f>
-			streams:  27, words: 44260
-		worklib.uvm_pkg:sv <0x0ae508f2>
-			streams:  25, words: 66904
-		worklib.uvm_pkg:sv <0x29e492b4>
-			streams:  27, words: 49806
-		worklib.uvm_pkg:sv <0x50aac657>
-			streams:  25, words: 59034
-		worklib.uvm_pkg:sv <0x6d0c29ff>
-			streams:  25, words: 62189
-		worklib.uvm_pkg:sv <0x1713b28b>
-			streams:  27, words: 41168
-		worklib.uvm_pkg:sv <0x7e9e330e>
-			streams:  25, words: 58581
-		worklib.uvm_pkg:sv <0x14103e22>
-			streams:  29, words: 105796
-		worklib.uvm_pkg:sv <0x2b23d1c9>
-			streams:  71, words: 140316
-		worklib.cdns_uvm_pkg:sv <0x50ed0c8b>
-			streams:  28, words: 39360
-		worklib.cdns_uvm_pkg:sv <0x2eadb22b>
-			streams:   9, words:  5179
-		worklib.cdns_uvm_pkg:sv <0x6b3c7c57>
-			streams:  10, words:  9339
-		worklib.uvm_pkg:sv <0x3c395b7e>
-			streams:  24, words: 23636
-		worklib.uvm_pkg:sv <0x520261b0>
-			streams:   7, words:  3126
-		worklib.uvm_pkg:sv <0x48f4ceaf>
-			streams:  24, words: 26317
-		worklib.uvm_pkg:sv <0x7b5009e6>
-			streams:  70, words: 84799
-		worklib.uvm_pkg:sv <0x5a319369>
-			streams:   9, words:  5110
-		worklib.uvm_pkg:sv <0x3bbb5afb>
-			streams: 111, words: 182179
-		worklib.uvm_pkg:sv <0x31c381e8>
-			streams: 278, words: 330652
-		worklib.uvm_pkg:sv <0x69bab019>
-			streams:   7, words:  3126
-		worklib.uvm_pkg:sv <0x7a849ac6>
-			streams:  34, words: 40921
-		worklib.uvm_pkg:sv <0x4e55fd8d>
-			streams:  32, words: 31872
-		worklib.uvm_pkg:sv <0x1de8a384>
-			streams: 108, words: 186615
-		worklib.uvm_pkg:sv <0x17cc16e0>
-			streams:   7, words:  3126
-		worklib.uvm_pkg:sv <0x705c082a>
-			streams:  23, words: 28676
-		worklib.uvm_pkg:sv <0x452b5065>
-			streams: 219, words: 293126
-		worklib.uvm_pkg:sv <0x15467d2f>
-			streams:  23, words: 28682
-		worklib.top:sv <0x0d6a4d97>
-			streams:  79, words: 128433
-		worklib.pkg:sv <0x03bf0033>
+		worklib.uvm_pkg:sv <0x59c23605>
+			streams:   8, words:  7542
+		worklib.uvm_pkg:sv <0x7d154e37>
+			streams:   8, words:  7202
+		worklib.uvm_pkg:sv <0x7fdf9fd8>
+			streams:   7, words:  6612
+		worklib.uvm_pkg:sv <0x213f666d>
+			streams:   7, words:  1918
+		worklib.uvm_pkg:sv <0x3636ec8c>
+			streams:   8, words:  2765
+		worklib.uvm_pkg:sv <0x5966d302>
+			streams:  22, words: 50596
+		worklib.uvm_pkg:sv <0x245d1b75>
+			streams:   7, words:  1918
+		worklib.uvm_pkg:sv <0x1d45aa2a>
+			streams:  28, words: 26382
+		worklib.uvm_pkg:sv <0x5fcf9028>
+			streams:  27, words: 25177
+		worklib.uvm_pkg:sv <0x15f66d8d>
+			streams:  23, words: 24620
+		worklib.uvm_pkg:sv <0x3a50584a>
+			streams:  14, words:  5920
+		worklib.uvm_pkg:sv <0x16ba9f07>
+			streams:  26, words: 35156
+		worklib.uvm_pkg:sv <0x56e3a229>
+			streams:   7, words:  2422
+		worklib.uvm_pkg:sv <0x7724614c>
+			streams:  14, words: 15839
+		worklib.uvm_pkg:sv <0x2379bdcb>
+			streams:  26, words: 29837
+		worklib.uvm_pkg:sv <0x1e887045>
+			streams:  25, words: 54467
+		worklib.uvm_pkg:sv <0x79550daa>
+			streams:  27, words: 32823
+		worklib.uvm_pkg:sv <0x1c438df9>
+			streams:  26, words: 46766
+		worklib.uvm_pkg:sv <0x069093c8>
+			streams:  27, words: 35371
+		worklib.uvm_pkg:sv <0x6b5c7cd3>
+			streams:  25, words: 51262
+		worklib.uvm_pkg:sv <0x242296ad>
+			streams:  27, words: 37474
+		worklib.uvm_pkg:sv <0x7698b3c0>
+			streams:  25, words: 56962
+		worklib.uvm_pkg:sv <0x601449f7>
+			streams:  27, words: 42288
+		worklib.uvm_pkg:sv <0x1558b56a>
+			streams:  25, words: 50105
+		worklib.uvm_pkg:sv <0x6c55cbd1>
+			streams:  25, words: 53621
+		worklib.uvm_pkg:sv <0x5f1df406>
+			streams:  27, words: 34915
+		worklib.uvm_pkg:sv <0x791e6991>
+			streams:  25, words: 50164
+		worklib.uvm_pkg:sv <0x0b50c0fa>
+			streams:  28, words: 79461
+		worklib.uvm_pkg:sv <0x2a9197ea>
+			streams:  59, words: 78598
+		worklib.cdns_uvm_pkg:sv <0x7f64292a>
+			streams:  27, words: 34653
+		worklib.cdns_uvm_pkg:sv <0x1976d258>
+			streams:   8, words:  4022
+		worklib.cdns_uvm_pkg:sv <0x6de051df>
+			streams:  10, words:  8686
+		worklib.uvm_pkg:sv <0x40da91aa>
+			streams:  24, words: 20724
+		worklib.uvm_pkg:sv <0x7bce1ca4>
+			streams:   7, words:  3090
+		worklib.uvm_pkg:sv <0x53a3a9af>
+			streams:  24, words: 21517
+		worklib.uvm_pkg:sv <0x0891c62e>
+			streams:  69, words: 69670
+		worklib.uvm_pkg:sv <0x26c8378b>
+			streams:   9, words:  4523
+		worklib.uvm_pkg:sv <0x45e63917>
+			streams: 109, words: 149177
+		worklib.uvm_pkg:sv <0x2a3ccaa9>
+			streams: 270, words: 259180
+		worklib.uvm_pkg:sv <0x400edf66>
+			streams:   7, words:  3090
+		worklib.uvm_pkg:sv <0x6240332c>
+			streams:  34, words: 35456
+		worklib.uvm_pkg:sv <0x48a0033e>
+			streams:  32, words: 28019
+		worklib.uvm_pkg:sv <0x3616a006>
+			streams: 101, words: 146815
+		worklib.uvm_pkg:sv <0x7c5f18a3>
+			streams:   7, words:  3090
+		worklib.uvm_pkg:sv <0x3ac16272>
+			streams:  23, words: 24429
+		worklib.uvm_pkg:sv <0x01a62b12>
+			streams: 208, words: 219792
+		worklib.uvm_pkg:sv <0x37045ab3>
+			streams:  23, words: 24435
+		worklib.top:sv <0x23a2991a>
+			streams:  77, words: 102032
+		worklib.pkg:sv <0x13b6f5f1>
 			streams:   0, words:     0
-		worklib.cdns_uvm_pkg:sv <0x48003cd0>
-			streams: 136, words: 284984
-		worklib.cdns_uvmapi:svp <0x44eaf677>
-			streams:  27, words: 36890
-		worklib.cdns_assert2uvm_pkg:sv <0x1b200012>
-			streams:   3, words:  2525
-		worklib.uvm_pkg:sv <0x0b38393d>
-			streams: 4718, words: 9314293
+		worklib.cdns_uvm_pkg:sv <0x176ef37e>
+			streams: 134, words: 246574
+		worklib.cdns_uvmapi:svp <0x3493f500>
+			streams:  27, words: 31625
+		worklib.cdns_assert2uvm_pkg:sv <0x165e3bdf>
+			streams:   3, words:  2233
+		worklib.uvm_pkg:sv <0x0f4bb22a>
+			streams: 4440, words: 7214963
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
@@ -241,18 +241,19 @@ xmelab: *W,COVDCL: By default expression coverage is scored only for Verilog log
 		SV Class specializations:    409     409
 	Writing initial simulation snapshot: worklib.top:sv
 Loading snapshot worklib.top:sv .................... Done
+xmsim: *W,XCLGNOPTM: The SystemVerilog constraint solver Xceligen options 'seed_only_rand and process_alternate_rng and ignore_worklib_name' are not specified and will default to 0. The recommended value for each of them is 1 which will become the default in a future release.
 SVSEED default: 1
 xmsim: *W,RNDXCELON: Xceligen, the new SystemVerilog constraint solver is used. Disabling Xceligen and using the legacy constraint solver is possible with "xrun/xmsim -xceligen on=0 ...".
 xmsim: *W,DSEM2009: This SystemVerilog design is simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
-xcelium> source /usr/local/cds/XCELIUM1809/tools/xcelium/files/xmsimrc
-xcelium> source /usr/local/cds/XCELIUM1809/tools/methodology/UVM/CDNS-1.1d/additions/sv/files/tcl/uvm_sim.tcl
+xcelium> source /usr/local/cds/XCELIUM1909/tools/xcelium/files/xmsimrc
+xcelium> source /usr/local/cds/XCELIUM1909/tools/methodology/UVM/CDNS-1.1d/additions/sv/files/tcl/uvm_sim.tcl
 xcelium> database -open waves -shm
 Created SHM database waves
 xcelium> probe -create top -depth all -all -shm -database waves
 Created probe 1
 xcelium> run
 ----------------------------------------------------------------
-CDNS-UVM-1.1d (18.09-s011)
+CDNS-UVM-1.1d (19.09-s003)
 (C) 2007-2013 Mentor Graphics Corporation
 (C) 2007-2013 Cadence Design Systems, Inc.
 (C) 2006-2013 Synopsys, Inc.
@@ -273,61 +274,74 @@ CDNS-UVM-1.1d (18.09-s011)
 
 UVM_INFO @ 0: reporter [RNTST] Running test simple_test...
 UVM_INFO @ 0: reporter [UVM_CMDLINE_PROC] Applying config setting from the command line: +uvm_set_config_int=*,recording_detail,1
-SDI/Verilog Transaction Recording Facility Version 18.09-s011
-cont do monitor =           9
-Cont =           7
-dt_i = 00000000011001010
-tr.dt_i[         14] = 0
-vif.dt_i = 0
-tr.dt_i[         13] = 0
-vif.dt_i = 0
-tr.dt_i[         12] = 0
-vif.dt_i = 0
-tr.dt_i[         11] = 0
-vif.dt_i = 0
-tr.dt_i[         10] = 0
-vif.dt_i = 0
-tr.dt_i[          9] = 0
-vif.dt_i = 0
-tr.dt_i[          8] = 0
-vif.dt_i = 0
-tr.dt_i[          7] = 1
-vif.dt_i = 1
-tr.dt_i[          6] = 1
-vif.dt_i = 1
-tr.dt_i[          5] = 0
-vif.dt_i = 0
-tr.dt_i[          4] = 0
-vif.dt_i = 0
-tr.dt_i[          3] = 1
-vif.dt_i = 1
-tr.dt_i[          2] = 0
-vif.dt_i = 0
-tr.dt_i[          1] = 1
-vif.dt_i = 1
-tr.dt_i[          0] = 0
-vif.dt_i = 0
+SDI/Verilog Transaction Recording Facility Version 19.09-s003
+Cont =           3
+dt_i = 00000000000001100
+00000000000000000 -           0
+00000000000000000 -           1
+00100000000000000 -           2
+00110000000000000 -           3
+00110000000000000 -           4
+00110000000000000 -           5
+00110000000000000 -           6
+tr_in.dt_i = 00000000000011000
 Cheguei aki?
-To aki ainda, 00000000110010100,           1
-To aki ainda, 00000001100101000,           2
-To aki ainda, 00000011001010000,           3
-To aki ainda, 00000110010100000,           4
-To aki ainda, 00001100101000000,           5
-To aki ainda, 00011001010000000,           6
-To aki ainda, 00110010100000000,           7
-To aki ainda, 01100101000000000,           8
-To aki ainda, 11001010000000000,           9
+To aki ainda, 00000000000110000,           1
+To aki ainda, 00000000001100000,           2
+To aki ainda, 00000000011000000,           3
+To aki ainda, 00000000110000000,           4
+To aki ainda, 00000001100000000,           5
+To aki ainda, 00000011000000000,           6
+To aki ainda, 00000110000000000,           7
+To aki ainda, 00001100000000000,           8
+To aki ainda, 00011000000000000,           9
+To aki ainda, 00110000000000000,          10
+To aki ainda, 01100000000000000,          11
+To aki ainda, 11000000000000000,          12
 To aki ainda 2, 1
 To aki ainda 2, 1
 To aki ainda 2, 0
 To aki ainda 2, 0
+To aki ainda 2, 0
+decod = 8'b00010111
+tr_out = 8'b00010111
+UVM_INFO @ 240: reporter [MISCMP] Miscompare for tr_out.dt_o: lhs = 'hb : rhs = 'h17
+UVM_INFO @ 240: reporter [MISCMP] 1 Miscompare(s) for object tr_out@5054 vs. tr_out@4052
+UVM_WARNING @ 240: uvm_test_top.env.sb.comp [Comparator Mismatch] dt_o = 00010111 differs from dt_o = 00001011
+Cont =           3
+dt_i = 00000000000001100
+00000000000000000 -           0
+00000000000000000 -           1
+00100000000000000 -           2
+00110000000000000 -           3
+00110000000000000 -           4
+00110000000000000 -           5
+00110000000000000 -           6
+tr_in.dt_i = 00000000000011000
+Cheguei aki?
+To aki ainda, 00000000000110000,           1
+To aki ainda, 00000000001100000,           2
+To aki ainda, 00000000011000000,           3
+To aki ainda, 00000000110000000,           4
+To aki ainda, 00000001100000000,           5
+To aki ainda, 00000011000000000,           6
+To aki ainda, 00000110000000000,           7
+To aki ainda, 00001100000000000,           8
+To aki ainda, 00011000000000000,           9
+To aki ainda, 00110000000000000,          10
+To aki ainda, 01100000000000000,          11
+To aki ainda, 11000000000000000,          12
+To aki ainda 2, 1
 To aki ainda 2, 1
 To aki ainda 2, 0
-To aki ainda 2, 1
 To aki ainda 2, 0
-decod = 8'b11001001
-tr_out = 8'b11001001
-Simulation interrupted at 884610960 NS + 0
+To aki ainda 2, 0
+decod = 8'b00010111
+tr_out = 8'b00010111
+UVM_INFO @ 400: reporter [MISCMP] Miscompare for tr_out.dt_o: lhs = 'h5 : rhs = 'h17
+UVM_INFO @ 400: reporter [MISCMP] 1 Miscompare(s) for object tr_out@5045 vs. tr_out@4052
+UVM_WARNING @ 400: uvm_test_top.env.sb.comp [Comparator Mismatch] dt_o = 00010111 differs from dt_o = 00000101
+Simulation interrupted at 220652760 NS + 0
 xcelium> q
 
 coverage setup:
@@ -339,4 +353,4 @@ coverage setup:
 coverage files:
   model(design data) :  ./cov_work/scope/icc_503211b9_00000000.ucm
   data               :  ./cov_work/scope/simple_test/icc_503211b9_00000000.ucd
-TOOL:	xrun(64)	18.09-s011: Exiting on Dec 17, 2019 at 09:45:38 -03  (total: 00:00:53)
+TOOL:	xrun(64)	19.09-s003: Exiting on Dec 17, 2019 at 11:28:14 -03  (total: 00:00:18)

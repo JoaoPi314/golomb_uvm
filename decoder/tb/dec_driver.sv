@@ -46,19 +46,19 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 			seq_item_port.get_next_item(tr);
 		    auxiliar = tr.dt_i + 1;
 			conta();
-			c = 2*cont;
+			c = 0;
 			$display("dt_i = %b", tr.dt_i);
 			vif.valid_i = 1;
-			while(c >= 0)begin
+			while(c < (2*cont + 1))begin
 				@(posedge vif.clk);
 				vif.dt_i = tr.dt_i[c];
-				$display("tr.dt_i[%d] = %d", c, tr.dt_i[c]);
-				c -= 1;
-				$display("vif.dt_i = %d", vif.dt_i);
+				//$display("tr.dt_i[%d] = %d", c, tr.dt_i[c]);
+				c += 1;
+				//$display("vif.dt_i = %d", vif.dt_i);
 			end
 			begin_tr(tr, "driver");
-			@(negedge vif.clk);
 			vif.valid_i = 0;
+			@(negedge vif.clk);
 			seq_item_port.item_done();
 			end_tr(tr);
 			@(posedge vif.valid_o);
@@ -73,9 +73,10 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 			auxiliar = auxiliar << 1;
 			cont +=1;
 		end
-		$display("cont do monitor = %d", cont);
+		//$display("cont do monitor = %d", cont);
 		cont = 16 - cont;
-		cont = (cont == 0) ? 17 : cont; 
+		cont = (cont == 0) ? 17 : cont;
+		if(cont > 8) cont = 8; 
 		$display("Cont = %d", cont);
 	endfunction : conta
 
