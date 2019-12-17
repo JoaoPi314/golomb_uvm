@@ -1,14 +1,13 @@
 class dec_monitor extends uvm_monitor;
 	`uvm_component_utils(dec_monitor)
 
-	dec_interface_vif vif;
+	interface_vif vif;
 	event begin_rec_in, begin_rec_out, end_rec_in, end_rec_out;
 	dec_transaction_in tr_in;
 	dec_transaction_out tr_out;
 
 	int index;
 	int cont;
-	bit [:0] auxiliar;
 	bit [0:16] dt_i;
 
 	uvm_analysis_port #(dec_transaction_in)  req_port;
@@ -61,10 +60,12 @@ class dec_monitor extends uvm_monitor;
 			@(posedge vif.clk iff vif.valid_i) begin
 				while(vif.valid_i)begin
 					dt_i[index] = vif.dt_i;
-					@(posedge viv.clk);
+					@(posedge vif.clk);
+					index += 1;
 				end
+				tr_in.dt_i = dt_i >> 1;
 				->begin_rec_in;
-				tr_in.dt_i = dt_i;
+				req_port.write(tr_in);
 				@(negedge vif.clk);
 				->end_rec_in;
 			end

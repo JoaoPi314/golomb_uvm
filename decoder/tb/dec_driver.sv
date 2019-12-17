@@ -3,7 +3,7 @@ typedef virtual dec_interface_if.mst interface_vif;
 class dec_driver extends uvm_driver #(dec_transaction_in);
 	`uvm_component_utils(dec_driver) //Sempre tem que ter isso em classes que derivam de uvm_object
 
-	dec_interface_vif vif;
+	interface_vif vif;
 	dec_transaction_in tr;
 
 	int cont, c;
@@ -42,29 +42,41 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 		wait(vif.rstn === 0);
 		@(posedge vif.rstn);
 		forever begin
+			@(posedge vif.clk);
+			seq_item_port.get_next_item(tr);
+		    auxiliar = tr.dt_i + 1;
 			conta();
-			c = cont;
-			valid_i = 1;
-			while(c > 0)begin
+			c = 2*cont;
+			$display("dt_i = %b", tr.dt_i);
+			vif.valid_i = 1;
+			while(c >= 0)begin
 				@(posedge vif.clk);
 				vif.dt_i = tr.dt_i[c];
+				$display("tr.dt_i[%d] = %d", c, tr.dt_i[c]);
+				c -= 1;
+				$display("vif.dt_i = %d", vif.dt_i);
 			end
-			valid_i = 0;
+			begin_tr(tr, "driver");
+			@(negedge vif.clk);
+			vif.valid_i = 0;
+			seq_item_port.item_done();
+			end_tr(tr);
+			@(posedge vif.valid_o);
 
 		end
 	endtask : get_and_drive
 
 
 	virtual function void conta();
-		auxiliar = tr.dt_i + 1;
 		cont = 0;
 		while (auxiliar[16] === 0 && cont < 17)begin
 			auxiliar = auxiliar << 1;
-			cont +=1 ;
+			cont +=1;
 		end
-		//$display("cont do monitor = %d", cont);
-		cont = 17 - cont;
+		$display("cont do monitor = %d", cont);
+		cont = 16 - cont;
 		cont = (cont == 0) ? 17 : cont; 
+		$display("Cont = %d", cont);
 	endfunction : conta
 
 endclass : dec_driver

@@ -1,4 +1,4 @@
-class deC_transaction_out extends uvm_sequence_item;
+class dec_transaction_out extends uvm_sequence_item;
 
 	rand bit [7:0] dt_o;
 

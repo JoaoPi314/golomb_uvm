@@ -42,7 +42,7 @@ class driver extends uvm_driver #(transaction_in);
 			@(posedge vif.clk);
 			seq_item_port.get_next_item(tr);
 			//$display("dt_i driver= %b", tr.dt_i);
-			begin_tr(tr, "req_qdriver");
+			begin_tr(tr, "req_driver");
 			@(posedge vif.clk);
 			vif.dt_i = tr.dt_i;
 			vif.valid_i = '1;
