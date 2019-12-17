@@ -1,1 +1,0 @@
-s1(16Dec2019:11:35:27):  xrun -64bit -uvm ./pkg.sv ./interface_if.sv ../rtl/exp_golomb_coder.sv top.sv -sv_lib test.so +UVM_TESTNAME=simple_test -covtest simple_test -access +r -input ./shm.tcl +uvm_set_config_int=*,recording_detail,1 -coverage all -covoverwrite 
