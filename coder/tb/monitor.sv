@@ -77,14 +77,10 @@ class monitor extends uvm_monitor;
 				dt_o[cont - index - 1] = vif.dt_o;
 				index += 1;
 				@(posedge vif.clk);
-				//$display("vif.dt_o = %b", vif.dt_o);
-				//$display("dt_o[%d] = %b", cont - index - 1, vif.dt_o);
 			end
-			//$display("dt_o = %b", dt_o);
 			tr_out.dt_o = dt_o;
 			begin_tr(tr_out, "resp");
 			resp_port.write(tr_out);
-			//$display("Escrevi");
 			if(~vif.valid_o)
 				index = 0;
 			@(negedge vif.clk);
@@ -99,7 +95,6 @@ class monitor extends uvm_monitor;
 			auxiliar = auxiliar << 1;
 			cont +=1 ;
 		end
-		//$display("cont do monitor = %d", cont);
 		cont = 8 - cont;
 		cont = (cont == 0) ? 9 : cont; 
 		cont = (cont - 1)*2 + 1;

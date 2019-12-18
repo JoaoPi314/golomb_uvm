@@ -29,7 +29,7 @@ class coverage extends uvm_component;
 
 	function void write(transaction_out t);
 		resp.copy(t);
-		if(n_tr == min_tr)
+		if(n_tr == min_tr - 1)
 			->end_coverage;
 		else
 			n_tr += 1;

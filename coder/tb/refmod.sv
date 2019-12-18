@@ -13,16 +13,13 @@ class refmod extends uvm_component;
 	bit [16:0] dt_o;
 	bit [7:0] sum;
 	int count;
-	int c;
-	int i;
+	int count2;
 	int size;
 
 	function new(string name = "refmod", uvm_component parent);
 		super.new(name, parent);
 		ref_req  = new("ref_req", this);
 		ref_resp = new("ref_resp", this);
-		count = 8;
-		c = 7;
 	endfunction : new
 
 	virtual function void build_phase(uvm_phase phase);
@@ -46,7 +43,6 @@ class refmod extends uvm_component;
 			@begin_reftask;
 			tr_out = transaction_out::type_id::create("tr_out", this);
 			codifica();
-			//$display("Codificado: %b", dt_o);
 			begin_tr(tr_out, "ref_resp");
 			tr_out.dt_o = dt_o;
 			ref_resp.write(tr_out);
@@ -54,32 +50,46 @@ class refmod extends uvm_component;
 			end_tr(tr_out);
 		end
 	endtask : refmod_task
-
-
+//********************************************************************************
+// O código exp-golomb segue a seguinte lógica:									 *
+// . Escreva o número a ser codificado + 1 (Ex. 00000100 -> 00000101)			 *
+// . Conte quantos bits até o bit '1' mais significativo (Ex. 3)				 *
+// . Escreva esse número -1 de zeros (Ex. 00)									 *
+// . Escreva o em seguida o número a ser codificado adicionado de 1 (Ex. 00+101) *
+// . Obtenha a saída (Ex. 00101)												 *
+//********************************************************************************
 	virtual function void codifica();
+		count2 = 7;
+		count = 8;
 		sum = tr_in.dt_i + 1;
-		while(sum[c] == 0 && c >= 0)begin 
+		//***************************************
+		//*****Conta quantos bits até o '1'*****
+		//***************************************
+		while(sum[count2] == 0 && count2 >= 0)begin 
 			count -= 1;
-			c -=1;
+			count2 -=1;
 		end
+		//Se zerar é porque o dado é 255, logo o tamanho é 9 (255 + 1)
 		if(count === 0)
 			count = 9;
-		//$display("cont = %d", count);
-		size = (count -1)*2 + 1;
-		c = size -1;
-		while(c > (size/2))begin
-			dt_o[c] = 1'b0;
-			c -= 1;
+		size = (count -1)*2 + 1; //Define o tamanho da saída
+		count2 = size -1;
+		//***************************************
+		//********Define os '0' da saída ********
+		//***************************************
+		while(count2 > (size/2))begin
+			dt_o[count2] = 1'b0;
+			count2 -= 1;
 		end
-		dt_o[size/2] = 1'b1;
-		c-=1;
-		while(c >= 0)begin
-			dt_o[c] = sum[c];
-			c -= 1;
+		dt_o[size/2] = 1'b1; //Define o bit 1 que sempre aparece no meio
+		count2 -= 1;
+		//***************************************
+		//*****Define o restante dos bits *******
+		//***************************************
+		while(count2 >= 0)begin
+			dt_o[count2] = sum[count2];
+			count2 -= 1;
 		end
-
-		c = 7;
-		count = 8;
 	endfunction
 
 

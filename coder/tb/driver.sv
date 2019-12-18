@@ -1,7 +1,7 @@
 typedef virtual interface_if.mst interface_vif;
 
 class driver extends uvm_driver #(transaction_in);
-	`uvm_component_utils(driver) //Sempre tem que ter isso em classes que derivam de uvm_object
+	`uvm_component_utils(driver) 
 
 	interface_vif vif;
 	transaction_in tr;
@@ -41,7 +41,6 @@ class driver extends uvm_driver #(transaction_in);
 		forever begin
 			@(posedge vif.clk);
 			seq_item_port.get_next_item(tr);
-			//$display("dt_i driver= %b", tr.dt_i);
 			begin_tr(tr, "req_driver");
 			@(posedge vif.clk);
 			vif.dt_i = tr.dt_i;
