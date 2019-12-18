@@ -12,7 +12,8 @@ class dec_sequence_in extends uvm_sequence #(dec_transaction_in);
 		forever begin
 			tr = dec_transaction_in::type_id::create("tr");
 			start_item(tr);
-			assert(tr.randomize()with{tr.dt_i == 17'b0000_0000_0_000_1100;});
+			assert(tr.randomize()with{tr.dt_i <= 17'b0000_0000_1_0000_0000;
+									  tr.dt_i > 'b0;});
 			finish_item(tr);
 		end
 	endtask : body

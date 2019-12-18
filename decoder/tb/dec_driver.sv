@@ -7,7 +7,6 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 	dec_transaction_in tr;
 
 	int cont, c;
-	bit [16:0] auxiliar;
 
 	function new(string name = "dec_driver", uvm_component parent = null);
 		super.new(name, parent);
@@ -44,19 +43,19 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 		forever begin
 			@(posedge vif.clk);
 			seq_item_port.get_next_item(tr);
-		    auxiliar = tr.dt_i + 1;
 			conta();
-			c = 0;
-			$display("dt_i = %b", tr.dt_i);
-			vif.valid_i = 1;
-			while(c < (2*cont + 1))begin
+			c = 2*cont;
+			//$display("dt_i = %b", tr.dt_i);
+			while(c >= 0)begin
 				@(posedge vif.clk);
+				vif.valid_i = 1;
 				vif.dt_i = tr.dt_i[c];
 				//$display("tr.dt_i[%d] = %d", c, tr.dt_i[c]);
-				c += 1;
+				c -= 1;
 				//$display("vif.dt_i = %d", vif.dt_i);
 			end
 			begin_tr(tr, "driver");
+			@(posedge vif.clk);
 			vif.valid_i = 0;
 			@(negedge vif.clk);
 			seq_item_port.item_done();
@@ -68,16 +67,14 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 
 
 	virtual function void conta();
-		cont = 0;
-		while (auxiliar[16] === 0 && cont < 17)begin
-			auxiliar = auxiliar << 1;
-			cont +=1;
+		cont = 16;
+		while (tr.dt_i[cont] != 1'b1 && cont >= 0)begin
+			cont -=1;
 		end
-		//$display("cont do monitor = %d", cont);
-		cont = 16 - cont;
-		cont = (cont == 0) ? 17 : cont;
-		if(cont > 8) cont = 8; 
-		$display("Cont = %d", cont);
+		//$display("cont do driver = %d", cont);
+		cont = (cont == -1) ? 8 : cont;
+		//if(cont > 8) cont = 8; 
+		//$display("Cont = %d", cont);
 	endfunction : conta
 
 endclass : dec_driver

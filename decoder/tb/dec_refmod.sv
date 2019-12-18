@@ -38,12 +38,12 @@ class dec_refmod extends uvm_component;
 	task refmod_task();
 		forever begin
 			@begin_reftask;
-			$display("Cheguei aki?");
+			//$display("Cheguei aki?");
 			tr_out = dec_transaction_out::type_id::create("tr_out", this);
 			decodifica();
 			begin_tr(tr_out, "ref_resp");
 			tr_out.dt_o = decod;
-			$display("tr_out = 8'b%b", tr_out.dt_o);
+			//$display("tr_out = 8'b%b", tr_out.dt_o);
 			ref_resp.write(tr_out);
 			#10;
 			end_tr(tr_out);
@@ -52,24 +52,23 @@ class dec_refmod extends uvm_component;
 
 
 	virtual function void decodifica();
-		count = 0;
-		auxiliar = tr_in.dt_i;
-		while(auxiliar[16] === 0 && count < 17)begin​
-			auxiliar = auxiliar << 1;
-			count += 1;
-			$display("To aki ainda, %b, %d", auxiliar, count);
+		decod = 'b0;
+		count = 16;
+		while(tr_in.dt_i[count] != 1'b1 && count >= 0)begin​
+			count -= 1;
+			//$display("To aki ainda, %d", count);
 		end
-		if(count < 8)
+		if(count > 8)
 			decod = '0;
 		else begin​
-			c = 16 - count;
+			c = count + 1;
 			while(c >= 0)begin
 				decod[c] = tr_in.dt_i[c];
-				$display("To aki ainda 2, %b", decod[c]);
+				//$display("To aki ainda 2, %b", decod[c]);
 				c-=1;
 			end
 			decod -= 1;
-			$display("decod = 8'b%b", decod);
+			//$display("decod = 8'b%b", decod);
 		end
 	endfunction
 
