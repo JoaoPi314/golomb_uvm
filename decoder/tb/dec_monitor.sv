@@ -50,7 +50,7 @@ class dec_monitor extends uvm_monitor;
 				record_in();
 				collect_tr_in(phase);
 				collect_tr_out(phase);
-				contaTimeOut();
+				//contaTimeOut();
 			join
 
 		end 
@@ -76,7 +76,7 @@ class dec_monitor extends uvm_monitor;
 	endtask : collect_tr_in
 
 	virtual task collect_tr_out(uvm_phase phase);
-		@(posedge vif.clk iff vif.valid_o or timeOut);
+		@(posedge vif.clk iff vif.valid_o);
 		begin_tr(tr_out, "resp");
 		tr_out.dt_o = vif.dt_o;
 		resp_port.write(tr_out);
@@ -98,9 +98,9 @@ class dec_monitor extends uvm_monitor;
 			$display("TimeOut = %b; contador = %d", timeOut, cont2);
 			if(vif.valid_o)
 				break;
+			@(posedge vif.clk);	
 		end 
 	endtask : contaTimeOut
 
 
 endclass : dec_monitor
-

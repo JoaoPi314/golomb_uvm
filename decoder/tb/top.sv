@@ -44,7 +44,7 @@ module top;
 	end
 
 	initial begin
-		run_test("error_test");
+		run_test("simple_test");
 	end
 	
 

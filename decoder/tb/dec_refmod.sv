@@ -44,6 +44,7 @@ class dec_refmod extends uvm_component;
 			ref_resp.write(tr_out);
 			#10;
 			end_tr(tr_out);
+
 		end
 	endtask : refmod_task
 
