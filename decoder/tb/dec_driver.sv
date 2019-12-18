@@ -1,12 +1,11 @@
 typedef virtual dec_interface_if.mst interface_vif;
 
 class dec_driver extends uvm_driver #(dec_transaction_in);
-	`uvm_component_utils(dec_driver) //Sempre tem que ter isso em classes que derivam de uvm_object
-
+	`uvm_component_utils(dec_driver)
 	interface_vif vif;
 	dec_transaction_in tr;
 
-	int cont, c;
+	int cont;
 
 	function new(string name = "dec_driver", uvm_component parent = null);
 		super.new(name, parent);
@@ -44,15 +43,12 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 			@(posedge vif.clk);
 			seq_item_port.get_next_item(tr);
 			conta();
-			c = 2*cont;
-			//$display("dt_i = %b", tr.dt_i);
-			while(c >= 0)begin
+			cont = 2*cont;
+			while(cont >= 0)begin
 				@(posedge vif.clk);
 				vif.valid_i = 1;
-				vif.dt_i = tr.dt_i[c];
-				//$display("tr.dt_i[%d] = %d", c, tr.dt_i[c]);
-				c -= 1;
-				//$display("vif.dt_i = %d", vif.dt_i);
+				vif.dt_i = tr.dt_i[cont];
+				cont -= 1;
 			end
 			begin_tr(tr, "driver");
 			@(posedge vif.clk);
@@ -71,10 +67,7 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 		while (tr.dt_i[cont] != 1'b1 && cont >= 0)begin
 			cont -=1;
 		end
-		//$display("cont do driver = %d", cont);
 		cont = (cont == -1) ? 8 : cont;
-		//if(cont > 8) cont = 8; 
-		//$display("Cont = %d", cont);
 	endfunction : conta
 
 endclass : dec_driver

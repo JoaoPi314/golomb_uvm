@@ -9,8 +9,7 @@ class dec_refmod extends uvm_component;
 
 	event begin_reftask, begin_rec, end_rec;
 	bit [7:0] decod;
-	bit [16:0] auxiliar;
-	int count, c;
+	int count;
 
 
 	function new(string name = "refmod", uvm_component parent);
@@ -38,37 +37,43 @@ class dec_refmod extends uvm_component;
 	task refmod_task();
 		forever begin
 			@begin_reftask;
-			//$display("Cheguei aki?");
 			tr_out = dec_transaction_out::type_id::create("tr_out", this);
 			decodifica();
 			begin_tr(tr_out, "ref_resp");
 			tr_out.dt_o = decod;
-			//$display("tr_out = 8'b%b", tr_out.dt_o);
 			ref_resp.write(tr_out);
 			#10;
 			end_tr(tr_out);
 		end
 	endtask : refmod_task
 
-
+//********************************************************************************
+//********A lógica de decodificação segue  alógica inversa da codificação ********
+//********************************************************************************
 	virtual function void decodifica();
 		decod = 'b0;
 		count = 16;
+		//***************************************
+		//*****Conta quantos bits até o '1'******
+		//***************************************
 		while(tr_in.dt_i[count] != 1'b1 && count >= 0)begin​
 			count -= 1;
-			//$display("To aki ainda, %d", count);
 		end
+		//***************************************
+		//*****Saída inválida caso seja > 8******
+		//***************************************
 		if(count > 8)
 			decod = '0;
 		else begin​
-			c = count + 1;
-			while(c >= 0)begin
-				decod[c] = tr_in.dt_i[c];
-				//$display("To aki ainda 2, %b", decod[c]);
-				c-=1;
+			count += 1; // Incremento no contador para que conte também o 1
+		//***************************************
+		//*****Armazena o valor a partir do '1'**
+		//***************************************
+			while(count >= 0)begin
+				decod[count] = tr_in.dt_i[count];
+				count -= 1;
 			end
-			decod -= 1;
-			//$display("decod = 8'b%b", decod);
+			decod -= 1; // Dado decodificado é esse valor decrementado
 		end
 	endfunction
 

@@ -61,12 +61,10 @@ class dec_monitor extends uvm_monitor;
 			@(posedge vif.clk iff vif.valid_i) begin
 				while(vif.valid_i)begin
 					dt_i[index] = vif.dt_i;
-					//$display("%b - %d", dt_i, index);
 					index += 1;
 					@(posedge vif.clk);
 				end
 				tr_in.dt_i = dt_i >> (17 - index);
-				//$display("tr_in.dt_i = %b", tr_in.dt_i);
 				->begin_rec_in;
 				req_port.write(tr_in);
 				@(negedge vif.clk);
