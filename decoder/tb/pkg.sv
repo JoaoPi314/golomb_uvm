@@ -15,5 +15,6 @@ package pkg;
 
 	`include "./dec_env.sv"
 	`include "./simple_test.sv"
+	`include "./error_test.sv"
 
 endpackage : pkg
