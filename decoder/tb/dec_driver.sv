@@ -56,7 +56,8 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 			@(negedge vif.clk);
 			seq_item_port.item_done();
 			end_tr(tr);
-			@(posedge vif.valid_o);
+			repeat(20) @(posedge vif.clk);
+			//@(posedge vif.valid_o);
 
 		end
 	endtask : get_and_drive

@@ -5,6 +5,7 @@ package pkg;
 	`include "./dec_transaction_in.sv"
 	`include "./dec_transaction_out.sv"
 	`include "./dec_sequence_in.sv"
+	`include "./dec_sequence_in_err.sv"
 	`include "./dec_driver.sv"
 	`include "./dec_monitor.sv"
 	`include "./dec_agent.sv"

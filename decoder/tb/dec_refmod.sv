@@ -62,8 +62,10 @@ class dec_refmod extends uvm_component;
 		//***************************************
 		//*****Saída inválida caso seja > 8******
 		//***************************************
-		if(count > 8)
-			decod = '0;
+		if(count > 8)begin
+ 			decod = '1;
+ 			return;
+ 		end 
 		else begin​
 			count += 1; // Incremento no contador para que conte também o 1
 		//***************************************
