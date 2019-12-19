@@ -42,7 +42,7 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 		wait(vif.rstn === 0);
 		@(posedge vif.rstn);
 		forever begin
-			@(posedge vif.clk);
+			//@(posedge vif.clk);
 			seq_item_port.get_next_item(tr);
 			//$display("dt_i = %b", tr.dt_i);
 			conta();
@@ -56,11 +56,11 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 			begin_tr(tr, "driver");
 			@(posedge vif.clk);
 			vif.valid_i = 0;
-			timeOut = 0;
 			@(negedge vif.clk);
 			seq_item_port.item_done();
 			end_tr(tr);
-			@(posedge vif.valid_o or posedge timeOut);
+			//$display("Travei aqui?");
+			@(posedge vif.clk iff vif.valid_o or timeOut);
 
 		end
 	endtask : get_and_drive
@@ -73,23 +73,25 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 		end
 		cont = (cont == -1) ? 8 : cont;
 		cont = (cont > 8 ) ? 8 : cont;
+		//$display("Cont = %d", cont);
 	endfunction : conta
 
 	virtual task contaTimeOut();
 		forever begin
 			@(posedge vif.valid_i);
 			@(negedge vif.valid_i);
+			timeOut = 0;
 			cont2 = 0;
 			while(~timeOut)begin 
 				cont2 += 1;
-				if(cont2 >= 10)
+				if(cont2 >= 20)
 					timeOut = 1'b1;
 				else
 					timeOut = 1'b0;
-				//$display("TimeOut = %b; contador = %d", timeOut, cont2);
 				if(vif.valid_o)
 					break;
 				@(posedge vif.clk);	
+				//$display("TimeOut = %b; contador = %d", timeOut, cont2);
 			end 
 		end
 	endtask : contaTimeOut

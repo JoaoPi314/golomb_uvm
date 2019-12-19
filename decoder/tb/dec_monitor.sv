@@ -47,10 +47,10 @@ class dec_monitor extends uvm_monitor;
 	virtual task collect_tr(uvm_phase phase);
 		forever begin 
 			fork
-				record_in();
+				//record_in();
 				collect_tr_in(phase);
 				collect_tr_out(phase);
-				//contaTimeOut();
+				contaTimeOut();
 			join
 
 		end 
@@ -67,16 +67,19 @@ class dec_monitor extends uvm_monitor;
 					index += 1;
 					@(posedge vif.clk);
 				end
+				//timeOut = 0;
 				tr_in.dt_i = dt_i >> (17 - index);
-				->begin_rec_in;
+				begin_tr(tr_in, "req");
 				req_port.write(tr_in);
 				@(negedge vif.clk);
-				->end_rec_in;
+				end_tr(tr_in);
 			end
 	endtask : collect_tr_in
 
 	virtual task collect_tr_out(uvm_phase phase);
-		@(posedge vif.clk iff vif.valid_o);
+		@(posedge vif.clk iff vif.valid_o or timeOut);
+		//$display("Comecei a gravar por: %b ou %b", vif.valid_o, timeOut);
+		@(posedge vif.clk);
 		begin_tr(tr_out, "resp");
 		tr_out.dt_o = vif.dt_o;
 		resp_port.write(tr_out);
@@ -91,15 +94,16 @@ class dec_monitor extends uvm_monitor;
 		cont2 = 0;
 		while(~timeOut)begin 
 			cont2 += 1;		
-			if(cont2 >= 10)
+			if(cont2 >= 20)
 				timeOut = 1'b1;
 			else
 				timeOut = 1'b0;
-			$display("TimeOut = %b; contador = %d", timeOut, cont2);
+			//$display("TimeOut = %b; contador = %d", timeOut, cont2);
 			if(vif.valid_o)
 				break;
 			@(posedge vif.clk);	
-		end 
+		end
+		timeOut = 0;
 	endtask : contaTimeOut
 
 

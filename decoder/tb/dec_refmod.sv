@@ -39,12 +39,14 @@ class dec_refmod extends uvm_component;
 			@begin_reftask;
 			tr_out = dec_transaction_out::type_id::create("tr_out", this);
 			decodifica();
-			begin_tr(tr_out, "ref_resp");
-			tr_out.dt_o = decod;
-			ref_resp.write(tr_out);
-			#10;
-			end_tr(tr_out);
-
+			//$display("decod = %b", decod);
+			if(tr_in.dt_i <= 17'b0000_0000_1_0000_0000) begin 
+				begin_tr(tr_out, "ref_resp");
+				tr_out.dt_o = decod;
+				ref_resp.write(tr_out);
+				#10;
+				end_tr(tr_out);
+			end
 		end
 	endtask : refmod_task
 
@@ -63,8 +65,7 @@ class dec_refmod extends uvm_component;
 		//***************************************
 		//*****Saída inválida caso seja > 8******
 		//***************************************
-		if(count > 8)begin
- 			decod = '1;
+		if(tr_in.dt_i > 17'b0000_0000_1_0000_0000)begin
  			return;
  		end 
 		else begin​
