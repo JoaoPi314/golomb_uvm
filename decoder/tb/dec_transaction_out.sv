@@ -1,6 +1,7 @@
 class dec_transaction_out extends uvm_sequence_item;
 
 	rand bit [7:0] dt_o;
+	rand bit invalid_output;
 
 	function new(string name = "");
 		super.new(name);

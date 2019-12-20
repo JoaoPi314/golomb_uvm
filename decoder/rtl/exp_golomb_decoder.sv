@@ -40,6 +40,7 @@ parameter GET_DT     = 3'b001;
 parameter STABLE     = 3'b011;
 parameter DONE       = 3'b111;
 parameter RESET      = 3'b010;
+parameter INVALID    = 3'b110;
 // ========================================================================================
 // Interface
 // ========================================================================================
@@ -138,10 +139,20 @@ always_comb begin
                 end
 
         STABLE: begin
-                next_state = DONE;
+                if(valid_i)
+                    next_state = INVALID;
+                else
+                    next_state = DONE;
                 end
 
         //DONE = default
+
+        INVALID:begin
+                if(valid_i)
+                    next_state = INVALID;
+                else
+                    next_state = RESET;
+                end
 
         RESET:  begin
                     next_state = COUNT;
@@ -162,10 +173,7 @@ always_comb begin
                 end
 
         DONE:   begin
-                if(!valid_i)
-                    valid_o = 1'b1;
-                else
-                    valid_o = 1'b0;
+                valid_o = 1'b1;
                 incr_flg = 1'b0;
                 end
 

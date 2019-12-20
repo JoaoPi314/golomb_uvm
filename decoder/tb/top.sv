@@ -4,6 +4,7 @@ module top;
 
 	logic clk;
 	logic rstn;
+	string TEST;
 
 	initial begin
 		clk = 1;
@@ -44,7 +45,7 @@ module top;
 	end
 
 	initial begin
-		run_test("simple_test");
+		run_test(TEST);
 	end
 	
 

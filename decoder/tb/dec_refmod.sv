@@ -40,7 +40,7 @@ class dec_refmod extends uvm_component;
 			tr_out = dec_transaction_out::type_id::create("tr_out", this);
 			decodifica();
 			//$display("decod = %b", decod);
-			if(tr_in.dt_i <= 17'b0000_0000_1_0000_0000) begin 
+			if(tr_in.dt_i <= 17'b0000_0000_1_0000_0000 && tr_in.dt_i != '0) begin 
 				begin_tr(tr_out, "ref_resp");
 				tr_out.dt_o = decod;
 				ref_resp.write(tr_out);

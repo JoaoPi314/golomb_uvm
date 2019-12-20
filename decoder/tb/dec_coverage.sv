@@ -29,6 +29,8 @@ class dec_coverage extends uvm_component;
 
 	function void write(dec_transaction_out t);
 		resp.copy(t);
+		if(t.invalid_output)
+			`uvm_warning("INVALID OUTPUT", "Valid_out subiu com uma sequência de entrada inválida.")
 		if(n_tr == min_tr - 1)
 			->end_coverage;
 		else

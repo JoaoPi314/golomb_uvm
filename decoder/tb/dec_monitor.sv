@@ -79,6 +79,10 @@ class dec_monitor extends uvm_monitor;
 	virtual task collect_tr_out(uvm_phase phase);
 		@(posedge vif.clk iff vif.valid_o or timeOut);
 		//$display("Comecei a gravar por: %b ou %b", vif.valid_o, timeOut);
+		tr_out.invalid_output = 1'b0;
+		if(vif.valid_o)
+			if(tr_in.dt_i > 17'b0000_0000_1_0000_0000)
+				tr_out.invalid_output = 1'b1;
 		@(posedge vif.clk);
 		begin_tr(tr_out, "resp");
 		tr_out.dt_o = vif.dt_o;
