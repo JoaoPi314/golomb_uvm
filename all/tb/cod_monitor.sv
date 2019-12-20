@@ -1,18 +1,18 @@
-class monitor extends uvm_monitor;
-	`uvm_component_utils(monitor)
+class cod_monitor extends uvm_monitor;
+	`uvm_component_utils(cod_monitor)
 
 	interface_vif vif;
 	event begin_rec_in, begin_rec_out, end_rec_in, end_rec_out;
-	transaction_in tr_in;
-	transaction_out tr_out;
+	cod_transaction_in tr_in;
+	cod_transaction_out tr_out;
 
 	int index;
 	int cont;
 	bit [7:0] auxiliar;
 	bit [16:0] dt_o;
 
-	uvm_analysis_port #(transaction_in)  req_port;
-	uvm_analysis_port #(transaction_out) resp_port;
+	uvm_analysis_port #(cod_transaction_in)  req_port;
+	uvm_analysis_port #(cod_transaction_out) resp_port;
 
 	function new(string name, uvm_component parent);
 		super.new(name, parent);
@@ -26,8 +26,8 @@ class monitor extends uvm_monitor;
 		if(!uvm_config_db#(interface_vif)::get(this, "", "vif", vif)) begin 
 			`uvm_fatal("NOVIF", "failed to get virtual interface")
 		end
-		tr_in = transaction_in::type_id::create("tr_in", this);
-		tr_out = transaction_out::type_id::create("tr_out", this);
+		tr_in = cod_transaction_in::type_id::create("tr_in", this);
+		tr_out = cod_transaction_out::type_id::create("tr_out", this);
 	endfunction : build_phase
 
 	virtual task run_phase(uvm_phase phase);
@@ -101,4 +101,4 @@ class monitor extends uvm_monitor;
 	endfunction : conta
 	
 
-endclass : monitor
+endclass : cod_monitor

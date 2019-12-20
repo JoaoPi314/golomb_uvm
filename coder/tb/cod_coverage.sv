@@ -1,15 +1,15 @@
-class coverage extends uvm_component;
-	`uvm_component_utils(coverage)
+class cod_coverage extends uvm_component;
+	`uvm_component_utils(cod_coverage)
 
-	transaction_in req;
-	transaction_out resp;
-	uvm_analysis_imp#(transaction_out, coverage) resp_port;
+	cod_transaction_in req;
+	cod_transaction_out resp;
+	uvm_analysis_imp#(cod_transaction_out, cod_coverage) resp_port;
 
 	int min_tr;
 	int n_tr = 0;
 	event end_coverage;
 
-	function new(string name = "coverage", uvm_component parent = null);
+	function new(string name = "cod_coverage", uvm_component parent = null);
 		super.new(name, parent);
 		resp_port = new("resp_port", this);
 		req = new;
@@ -27,7 +27,7 @@ class coverage extends uvm_component;
 		phase.drop_objection(this);
 	endtask : run_phase
 
-	function void write(transaction_out t);
+	function void write(cod_transaction_out t);
 		resp.copy(t);
 		if(n_tr == min_tr - 1)
 			->end_coverage;
@@ -35,4 +35,4 @@ class coverage extends uvm_component;
 			n_tr += 1;
 	endfunction
 
-endclass : coverage
+endclass : cod_coverage

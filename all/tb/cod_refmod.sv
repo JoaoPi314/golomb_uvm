@@ -1,13 +1,13 @@
 //import "DPI-C" context function string codifica(dt_i);
 
-class refmod extends uvm_component;
-	`uvm_component_utils(refmod)
+class cod_refmod extends uvm_component;
+	`uvm_component_utils(cod_refmod)
 
-	transaction_in tr_in;
-	transaction_out tr_out;
+	cod_transaction_in tr_in;
+	cod_transaction_out tr_out;
 
-	uvm_analysis_imp #(transaction_in, refmod) ref_req;
-	uvm_analysis_port #(transaction_out) ref_resp;
+	uvm_analysis_imp #(cod_transaction_in, cod_refmod) ref_req;
+	uvm_analysis_port #(cod_transaction_out) ref_resp;
 
 	event begin_reftask, begin_rec, end_rec;
 	bit [16:0] dt_o;
@@ -16,7 +16,7 @@ class refmod extends uvm_component;
 	int count2;
 	int size;
 
-	function new(string name = "refmod", uvm_component parent);
+	function new(string name = "cod_refmod", uvm_component parent);
 		super.new(name, parent);
 		ref_req  = new("ref_req", this);
 		ref_resp = new("ref_resp", this);
@@ -32,8 +32,8 @@ class refmod extends uvm_component;
 	endtask : run_phase
 
 
-	virtual function write(transaction_in t);
-		tr_in = transaction_in#()::type_id::create("tr_in", this);
+	virtual function write(cod_transaction_in t);
+		tr_in = cod_transaction_in#()::type_id::create("tr_in", this);
 		tr_in.copy(t);
 		->begin_reftask;
 	endfunction : write
@@ -41,7 +41,7 @@ class refmod extends uvm_component;
 	task refmod_task();
 		forever begin​
 			@begin_reftask;
-			tr_out = transaction_out::type_id::create("tr_out", this);
+			tr_out = cod_transaction_out::type_id::create("tr_out", this);
 			codifica();
 			begin_tr(tr_out, "ref_resp");
 			tr_out.dt_o = dt_o;
@@ -95,5 +95,5 @@ class refmod extends uvm_component;
 
 
 
-endclass : refmod
+endclass : cod_refmod
 ​

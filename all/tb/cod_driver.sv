@@ -1,12 +1,12 @@
-typedef virtual interface_if.mst interface_vif;
+typedef virtual cod_interface_if.mst interface_vif;
 
-class driver extends uvm_driver #(transaction_in);
-	`uvm_component_utils(driver) 
+class cod_driver extends uvm_driver #(cod_transaction_in);
+	`uvm_component_utils(cod_driver) 
 
 	interface_vif vif;
-	transaction_in tr;
+	cod_transaction_in tr;
 
-	function new(string name = "driver", uvm_component parent = null);
+	function new(string name = "cod_driver", uvm_component parent = null);
 		super.new(name, parent);
 	endfunction : new
 
@@ -53,6 +53,6 @@ class driver extends uvm_driver #(transaction_in);
 		end
 	endtask : get_and_drive
 
-endclass : driver
+endclass : cod_driver
 
 

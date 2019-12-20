@@ -1,16 +1,16 @@
-class agent extends uvm_agent;
-	`uvm_component_utils(agent)
+class cod_agent extends uvm_agent;
+	`uvm_component_utils(cod_agent)
 
-	typedef uvm_sequencer#(transaction_in) sequencer;
+	typedef uvm_sequencer#(cod_transaction_in) sequencer;
 
-	uvm_analysis_port #(transaction_in) agt_req_port;
-	uvm_analysis_port #(transaction_out) agt_resp_port;
+	uvm_analysis_port #(cod_transaction_in) agt_req_port;
+	uvm_analysis_port #(cod_transaction_out) agt_resp_port;
 
 	sequencer sqr;
-	driver drv;
-	monitor mon;
+	cod_driver drv;
+	cod_monitor mon;
 
-	function new(string name = "agent", uvm_component parent = null);
+	function new(string name = "cod_agent", uvm_component parent = null);
 		super.new(name, parent);
 		agt_req_port  = new("agt_req_port", this);
 		agt_resp_port = new("agt_resp_port", this);
@@ -18,9 +18,9 @@ class agent extends uvm_agent;
 
 	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		mon = monitor::type_id::create("mon", this);
+		mon = cod_monitor::type_id::create("mon", this);
 		sqr = sequencer::type_id::create("sqr", this);
-		drv = driver::type_id::create("drv", this);
+		drv = cod_driver::type_id::create("drv", this);
 	endfunction : build_phase
 
 	virtual function void connect_phase(uvm_phase phase);
@@ -30,4 +30,4 @@ class agent extends uvm_agent;
 		drv.seq_item_port.connect(sqr.seq_item_export);
 	endfunction : connect_phase
 
-endclass : agent
+endclass : cod_agent

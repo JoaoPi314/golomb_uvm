@@ -1,13 +1,13 @@
-class transaction_in extends uvm_sequence_item;
+class dec_transaction_in extends uvm_sequence_item;
 
-	rand bit [7:0] dt_i;
+	rand bit [16:0] dt_i;
 
 	function new(string name = "");
 		super.new(name);
 	endfunction : new
 
 
-	`uvm_object_param_utils_begin(transaction_in)
+	`uvm_object_param_utils_begin(dec_transaction_in)
 		`uvm_field_int(dt_i, UVM_UNSIGNED)
 	`uvm_object_utils_end
 
@@ -16,4 +16,4 @@ class transaction_in extends uvm_sequence_item;
 		return $sformatf("dt_i = %b", dt_i);
 	endfunction
 
-endclass : transaction_in
+endclass : dec_transaction_in

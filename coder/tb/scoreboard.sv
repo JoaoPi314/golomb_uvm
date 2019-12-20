@@ -1,12 +1,12 @@
 class scoreboard extends uvm_scoreboard;
 	`uvm_component_utils(scoreboard)
 
-	typedef transaction_out T;
+	typedef cod_transaction_out T;
 	typedef uvm_in_order_class_comparator #(T) comp_type;
 	comp_type comp;
-	refmod rfm;
+	cod_refmod rfm;
 	uvm_analysis_port #(T) ap_comp;
-	uvm_analysis_port #(transaction_in) ap_rfm;
+	uvm_analysis_port #(cod_transaction_in) ap_rfm;
 
 	function new(string name = "scoreboard", uvm_component parent = null);
 		super.new(name, parent);
@@ -16,7 +16,7 @@ class scoreboard extends uvm_scoreboard;
 
 	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		rfm  = refmod::type_id::create("rfm", this);
+		rfm  = cod_refmod::type_id::create("rfm", this);
 		comp = comp_type::type_id::create("comp", this);
 	endfunction : build_phase
 

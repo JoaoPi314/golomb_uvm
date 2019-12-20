@@ -4,6 +4,7 @@ module top;
 
 	logic clk;
 	logic rstn;
+	string TEST;
 
 	initial begin
 		clk = 1;
@@ -14,16 +15,15 @@ module top;
 
 	always #10 clk = !clk;
 
-	cod_interface_if dut_if(.clk(clk), .rstn(rstn));
+	dec_interface_if dut_if(.clk(clk), .rstn(rstn));
 
-	exp_golomb_coder dut(
+	exp_golomb_decoder dut(
 		.clk_i 		(clk),
 		.rstn_i		(rstn),
 		.dt_i		(dut_if.dt_i),
 		.valid_i	(dut_if.valid_i),
 		.dt_o		(dut_if.dt_o),
-		.valid_o	(dut_if.valid_o),
-		.busy_o		(dut_if.busy_o)
+		.valid_o	(dut_if.valid_o)
 		);
 
 	initial begin
@@ -45,7 +45,7 @@ module top;
 	end
 
 	initial begin
-		run_test("simple_test");
+		run_test(TEST);
 	end
 	
 
