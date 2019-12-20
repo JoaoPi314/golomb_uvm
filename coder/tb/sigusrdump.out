@@ -1,5 +1,0 @@
-*** Current stack trace:
---> 0x7fcc8406d4cb std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string()            + b        /mnt/hdd1tera/cds/XCELIUM1809/tools.lnx86/lib/64bit/libstdc++.so.6
---> 0x7fcc8406d4cb std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string()            + b        /mnt/hdd1tera/cds/XCELIUM1809/tools.lnx86/lib/64bit/libstdc++.so.6
---> 0x7fcc74d64ace codifica             + b9       ./test.so
---> 0x46ec3a8 codifica             + ffff80338f987993 ./test.so
