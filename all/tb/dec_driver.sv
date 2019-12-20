@@ -1,12 +1,15 @@
 typedef virtual dec_interface_if.mst interface_vif;
 
-class dec_driver extends uvm_driver #(dec_transaction_in);
+class dec_driver extends uvm_driver #(cod_transaction_out);
 	`uvm_component_utils(dec_driver)
 	interface_vif vif;
 	dec_transaction_in tr;
 
 	int cont, cont2;
 	bit timeOut;
+	event begin_driver;
+
+	uvm_analysis_imp #(cod_transaction_out, dec_driver) dec_driver_port;
 
 	function new(string name = "dec_driver", uvm_component parent = null);
 		super.new(name, parent);
@@ -43,7 +46,7 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 		@(posedge vif.rstn);
 		forever begin
 			//@(posedge vif.clk);
-			seq_item_port.get_next_item(tr);
+			-@(begin_driver);
 			//$display("dt_i = %b", tr.dt_i);
 			conta();
 			cont = 2*cont;
@@ -57,7 +60,6 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 			@(posedge vif.clk);
 			vif.valid_i = 0;
 			@(negedge vif.clk);
-			seq_item_port.item_done();
 			end_tr(tr);
 			//$display("Travei aqui?");
 			@(posedge vif.clk iff vif.valid_o or timeOut);
@@ -95,6 +97,13 @@ class dec_driver extends uvm_driver #(dec_transaction_in);
 			end 
 		end
 	endtask : contaTimeOut
+
+
+	virtual function write(cod_transaction_in t);
+		tr = cod_transaction_out#()::type_id::create("tr", this);
+		tr.copy(t);
+		->begin_reftask;
+	endfunction : write
 
 endclass : dec_driver
 

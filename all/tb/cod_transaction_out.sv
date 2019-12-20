@@ -1,6 +1,6 @@
 class cod_transaction_out extends uvm_sequence_item;
 
-	rand bit [17:0] dt_o;
+	rand bit [16:0] dt_o;
 
 	function new(string name = "");
 		super.new(name);
