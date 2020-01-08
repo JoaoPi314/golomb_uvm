@@ -1,9 +1,9 @@
-class dec_coverage extends uvm_component;
-	`uvm_component_utils(dec_coverage)
+class coverage extends uvm_component;
+	`uvm_component_utils(coverage)
 
 	dec_transaction_in req;
 	dec_transaction_out resp;
-	uvm_analysis_imp#(dec_transaction_out, dec_coverage) resp_port;
+	uvm_analysis_imp#(dec_transaction_out, coverage) resp_port;
 
 	int min_tr;
 	int n_tr = 0;
@@ -37,4 +37,4 @@ class dec_coverage extends uvm_component;
 			n_tr += 1;
 	endfunction
 
-endclass : dec_coverage
+endclass : coverage
